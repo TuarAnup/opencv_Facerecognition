@@ -3,6 +3,7 @@ import cv2
 import os
 import glob
 import numpy as np
+# import pickle
 
 class SimpleFacerec:
     def __init__(self):
@@ -37,6 +38,9 @@ class SimpleFacerec:
             # Store file name and file encoding
             self.known_face_encodings.append(img_encoding)
             self.known_face_names.append(filename)
+        
+        all_embeddings = np.array(img_encoding)
+        np.save('embeddings.npy', all_embeddings)
         print("Encoding images loaded")
 
     def detect_known_faces(self, frame):
@@ -69,3 +73,4 @@ class SimpleFacerec:
         face_locations = np.array(face_locations)
         face_locations = face_locations / self.frame_resizing
         return face_locations.astype(int), face_names
+    
